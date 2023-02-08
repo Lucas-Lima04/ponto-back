@@ -2,7 +2,6 @@ import { HttpStatusCode } from "@/shared/constants/HttpStatusCode";
 import { ErrorHandler } from "@/shared/errors/ErrorHandler";
 import { ICryptography } from "@/shared/infra/adapters/cryptography/ICryptography";
 import { IUseCase } from "@/shared/protocols/IUseCase";
-import validatePassword from "@/shared/utils/tools/validatePassword";
 
 import { IUser } from "../../model/IUser";
 import { IUserRepository } from "../../repositories/IUsersRepository";
@@ -44,12 +43,6 @@ class CreateUserUseCase implements IUseCase<IRequest, IUser> {
             throw new ErrorHandler(
                 "Usuário já cadastrado",
                 HttpStatusCode.CONFLICT
-            );
-        }
-        if (!validatePassword(password)) {
-            throw new ErrorHandler(
-                "Password must have at least one letter and one number.",
-                HttpStatusCode.BAD_REQUEST
             );
         }
         const encryptedPassword = await this.cryptography.encrypt(password);

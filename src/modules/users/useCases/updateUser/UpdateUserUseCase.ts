@@ -2,7 +2,6 @@ import { HttpStatusCode } from "@/shared/constants/HttpStatusCode";
 import { ErrorHandler } from "@/shared/errors/ErrorHandler";
 import { ICryptography } from "@/shared/infra/adapters/cryptography/ICryptography";
 import { IUseCase } from "@/shared/protocols/IUseCase";
-import validatePassword from "@/shared/utils/tools/validatePassword";
 
 import { IUser } from "../../model/IUser";
 import { IUserRepository } from "../../repositories/IUsersRepository";
