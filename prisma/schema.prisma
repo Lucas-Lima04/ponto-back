@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  guid              String    @id @unique @default(uuid())
+  name              String
+  login             String    @unique
+  cpf               String
+  birthDate         String
+  sex               String
+  ctps              String
+  register          String
+  encryptedPassword String
+  authToken         String?   @db.VarChar(255)
+  createdAt         DateTime
+  updatedAt         DateTime
+  isActive          Boolean   @default(false)
+  isSuperAdmin      Boolean
+
+  ClockIns          ClockIn[]  
+}
+
+model ClockIn {
+  guid        String    @id @unique @default(uuid())
+  observation String
+  date        DateTime
+
+  createdAt   DateTime
+  updatedAt   DateTime
+  isActive    Boolean   @default(false)
+
+  user        User @relation(fields: [userGuid], references: [guid])
+  userGuid    String
+}
