@@ -4,6 +4,7 @@ export interface IClockIn {
     guid: string;
     observation: String;
     date: Date;
+    isIn: boolean;
 
     createdAt: Date;
     updatedAt: Date;

@@ -21,7 +21,7 @@ export class ClockInPrismaFactory implements IClockInFactory<IPrismaClockInFacto
             guid: clockIn.guid,
             observation: clockIn.observation,
             date: clockIn.date,
-
+            isIn: clockIn.isIn,
             createdAt: clockIn.createdAt,
             updatedAt: clockIn.updatedAt,
             isActive: clockIn.isActive,

@@ -6,8 +6,8 @@ export class ListClockInsUseCase {
     private readonly ClockInRepository: IClockInRepository,
   ) {}
 
-  async execute({ userGuid }) {
-    const clockIns = await this.ClockInRepository.listClockIns(userGuid)
+  async execute({ userGuid, startDate, endDate }) {
+    const clockIns = await this.ClockInRepository.listClockIns({userGuid, startDate, endDate})
 
     return clockIns
   }

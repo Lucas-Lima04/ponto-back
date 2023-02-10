@@ -18,13 +18,16 @@ export class ListClockInsController implements IController {
       const userGuid = request.user?.guid;
 
       const { guid } = request.params;
+      const { startDate, endDate } = request.query;
 
       if (guid && !request.user?.isSuperAdmin) {
         throw new ErrorHandler("Usuário sem permissão de realizar esta ação.", HttpStatusCode.BAD_REQUEST);
       }
 
       const clockIns = await this.ListClockInsUseCase.execute({
-        userGuid: guid || userGuid
+        userGuid: guid || userGuid,
+        startDate,
+        endDate
       })
       
       return response.status(HttpStatusCode.OK).json(clockIns)

@@ -33,6 +33,7 @@ model ClockIn {
   guid        String    @id @unique @default(uuid())
   observation String
   date        DateTime
+  isIn        Boolean
 
   createdAt   DateTime
   updatedAt   DateTime

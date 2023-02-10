@@ -16,14 +16,21 @@ interface IUpdateClockInDTO {
     date?: Date;
 }
 
+interface IListClockInDTO {
+    userGuid: string;
+    startDate?: string;
+    endDate?: string;
+}
+
 interface IClockInRepository {
     createClockIn(params: ICreateClockInDTO): Promise<IClockIn>;
     updateClockIn(params: IUpdateClockInDTO): Promise<IClockIn | undefined>;
-    listClockIns(userGuid: string): Promise<IClockIn[]>;
+    listClockIns(params: IListClockInDTO): Promise<IClockIn[]>;
 }
 
 export {
     ICreateClockInDTO,
     IUpdateClockInDTO,
+    IListClockInDTO,
     IClockInRepository
 };
