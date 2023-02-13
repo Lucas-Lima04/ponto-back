@@ -33,7 +33,7 @@ interface IUserRepository {
     deleteAccount(guid: string): Promise<IUser | undefined>;
     findByLogin(login: string): Promise<IUser | undefined>;
     validateAuth(guid: string, authToken: string): Promise<boolean>
-    list(): Promise<IUser[]>;
+    list(activeUsers: boolean): Promise<IUser[]>;
 }
 
 export {

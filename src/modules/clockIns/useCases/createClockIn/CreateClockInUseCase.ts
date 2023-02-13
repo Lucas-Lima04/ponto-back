@@ -17,8 +17,11 @@ class CreateClockInUseCase implements IUseCase<IRequest, IClockIn> {
         observation,
         userGuid,
     }: IRequest): Promise<IClockIn> {
+        const date = new Date();
+        date.setSeconds(0, 0);
+
         const clockIn = await this.ClockInsRepository.createClockIn({
-            date: new Date(),
+            date,
             observation,
             userGuid,
         });

@@ -18,10 +18,10 @@ class UsersPrismaRepository implements IUserRepository {
     ) {
         this.prismaClient = context.prisma;
     }
-    async list(): Promise<IUser[]> {
+    async list(activeUsers: boolean): Promise<IUser[]> {
         const users = await this.prismaClient.user.findMany({
             where: {
-                isSuperAdmin: false
+                isSuperAdmin: false,
             },
             orderBy: [
                 {isActive: "desc"},
@@ -29,7 +29,24 @@ class UsersPrismaRepository implements IUserRepository {
             ]
         });
 
-        return users.map(user => this.userFactory.generateFactoryObject(user));
+        if (activeUsers) {
+            const activeUsers: PrismaUser[] = [];
+
+            for (let i = 0; i < users.length; i++) {
+                const clockIns = await this.prismaClient.clockIn.count({
+                    where: {
+                        guid: users[i].guid
+                    }
+                });
+
+                if (clockIns % 2 !== 0) {
+                    activeUsers.push(users[i]);
+                }
+            }
+            return activeUsers.map(user => this.userFactory.generateFactoryObject(user));
+        } else {
+            return users.map(user => this.userFactory.generateFactoryObject(user));
+        }
     }
     
     async deleteAccount(guid: string): Promise<IUser | undefined> {

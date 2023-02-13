@@ -18,7 +18,9 @@ class ListUsersController implements IController {
     ): Promise<Response | void> {
         try {
             const guid = request.user?.guid || "";
-            const users = await this.listUsersUseCase.execute({ guid });
+            const { activeUsers } = request.query;
+
+            const users = await this.listUsersUseCase.execute({ guid, activeUsers: activeUsers && activeUsers ? true : false });
             
             return response.status(HttpStatusCode.OK).json(users);
         } catch (err) {

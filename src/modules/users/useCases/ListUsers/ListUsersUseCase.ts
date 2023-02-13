@@ -7,6 +7,7 @@ import { IUserRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
     guid: string;
+    activeUsers: boolean;
 }
 
 class ListUsersUseCase implements IUseCase<IRequest, IUser[]> {
@@ -14,7 +15,7 @@ class ListUsersUseCase implements IUseCase<IRequest, IUser[]> {
         private usersRepository: IUserRepository,
         ) {}
 
-    async execute({ guid }: IRequest): Promise<IUser[]> {
+    async execute({ guid, activeUsers }: IRequest): Promise<IUser[]> {
        
         const user = await this.usersRepository.findByGuid(guid);
 
@@ -29,7 +30,7 @@ class ListUsersUseCase implements IUseCase<IRequest, IUser[]> {
             );
         }
 
-        const users = await this.usersRepository.list();
+        const users = await this.usersRepository.list(activeUsers);
 
         return users;
     }
