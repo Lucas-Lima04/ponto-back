@@ -20,9 +20,6 @@ class UsersPrismaRepository implements IUserRepository {
     }
     async list(activeUsers: boolean): Promise<IUser[]> {
         const users = await this.prismaClient.user.findMany({
-            where: {
-                isSuperAdmin: false,
-            },
             orderBy: [
                 {isActive: "desc"},
                 {name: "asc"}
